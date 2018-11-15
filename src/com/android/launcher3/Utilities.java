@@ -50,6 +50,8 @@ import android.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.Interpolator;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 
 import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.util.LooperExecutor;
@@ -69,7 +71,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.android.internal.util.aospextended.AEXUtils;
 
 /**
  * Various utilities shared amongst the Launcher's classes.
@@ -705,7 +706,7 @@ public final class Utilities {
 
     public static boolean showQSB(Context context) {
         SharedPreferences prefs = getPrefs(context.getApplicationContext());
-        if (!AEXUtils.isPackageInstalled(context, LauncherTab.SEARCH_PACKAGE)) {
+        if (isPackageInstalled(context, LauncherTab.SEARCH_PACKAGE)) {
             return false;
         }
         return prefs.getBoolean(Homescreen.KEY_SHOW_SEARCHBAR, true);
@@ -720,5 +721,22 @@ public final class Utilities {
             }
             android.os.Process.killProcess(android.os.Process.myPid());
         });
+    }
+
+    public static boolean isPackageInstalled(Context context, String pkg, boolean ignoreState) {
+    if (pkg != null) {
+            try {
+                PackageInfo pi = context.getPackageManager().getPackageInfo(pkg, 0);
+                if (!pi.applicationInfo.enabled && !ignoreState) {
+                    return false;
+                }
+            } catch (NameNotFoundException e) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static boolean isPackageInstalled(Context context, String pkg) {
+        return isPackageInstalled(context, pkg, true);
     }
 }

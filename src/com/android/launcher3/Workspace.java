@@ -57,8 +57,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
-import com.android.internal.util.aospextended.AEXUtils;
-
 import com.android.launcher3.Launcher.LauncherOverlay;
 import com.android.launcher3.LauncherAppWidgetHost.ProviderChangedListener;
 import com.android.launcher3.LauncherStateManager.AnimationConfig;
@@ -96,6 +94,12 @@ import com.android.launcher3.widget.LauncherAppWidgetHostView;
 import com.android.launcher3.widget.PendingAddShortcutInfo;
 import com.android.launcher3.widget.PendingAddWidgetInfo;
 import com.android.launcher3.widget.PendingAppWidgetHostView;
+import android.os.PowerManager;
+import android.os.SystemClock;
+import android.os.ServiceManager;
+import android.os.RemoteException;
+
+import com.android.internal.statusbar.IStatusBarService;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -329,11 +333,11 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
                 break;
             // Sleep
             case 1:
-                AEXUtils.switchScreenOff(getContext());
+                switchScreenOff(getContext());
                 break;
             // Flashlight
             case 2:
-                AEXUtils.toggleCameraFlash();
+                toggleCameraFlash();
                 break;
         }
     }
@@ -3537,4 +3541,40 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
             onEndStateTransition();
         }
     }
+
+    private static void switchScreenOff(Context ctx) {
+         PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
+         if (pm!= null) {
+             pm.goToSleep(SystemClock.uptimeMillis());
+         }
+    }
+    
+    private static final class FireActions {
+        private static IStatusBarService mStatusBarService = null;
+        private static IStatusBarService getStatusBarService() {
+            synchronized (FireActions.class) {
+                if (mStatusBarService == null) {
+                    mStatusBarService = IStatusBarService.Stub.asInterface(
+                            ServiceManager.getService("statusbar"));
+                }
+                return mStatusBarService;
+            }
+        }
+
+        public static void toggleCameraFlash() {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                toggleCameraFlash();
+               
+            }
+        }
+}
+
+    public static void toggleCameraFlash() {
+        FireActions.toggleCameraFlash();
+    }
+
+
+
+
 }

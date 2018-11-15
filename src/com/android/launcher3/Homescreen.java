@@ -31,8 +31,10 @@ import android.preference.PreferenceFragment;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.SwitchPreference;
 import android.view.MenuItem;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 
-import com.android.internal.util.aospextended.AEXUtils;
+//import com.android.internal.util.aospextended.AEXUtils;
 
 public class Homescreen extends SettingsActivity implements PreferenceFragment.OnPreferenceStartFragmentCallback {
 
@@ -83,7 +85,7 @@ public class Homescreen extends SettingsActivity implements PreferenceFragment.O
             SwitchPreference showSearchBar = (SwitchPreference)
                     findPreference(KEY_SHOW_SEARCHBAR);
 
-            if (!AEXUtils.isPackageInstalled(mContext, LauncherTab.SEARCH_PACKAGE)) {
+            if (isPackageInstalled(mContext, LauncherTab.SEARCH_PACKAGE)) {
                 getPreferenceScreen().removePreference(feedIntegration);
                 getPreferenceScreen().removePreference(showSearchBar);
             }
@@ -145,6 +147,23 @@ public class Homescreen extends SettingsActivity implements PreferenceFragment.O
                     return true;
                 }
             });
+        }
+
+        public static boolean isPackageInstalled(Context context, String pkg, boolean ignoreState) {
+        if (pkg != null) {
+            try {
+                PackageInfo pi = context.getPackageManager().getPackageInfo(pkg, 0);
+                if (!pi.applicationInfo.enabled && !ignoreState) {
+                    return false;
+                }
+            } catch (NameNotFoundException e) {
+                return false;
+            }
+        }
+        return true;
+        }
+        public static boolean isPackageInstalled(Context context, String pkg) {
+        return isPackageInstalled(context, pkg, true);
         }
 
         @Override
