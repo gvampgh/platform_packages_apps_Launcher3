@@ -711,7 +711,7 @@ public final class Utilities {
 
     public static boolean showQSB(Context context) {
         SharedPreferences prefs = getPrefs(context.getApplicationContext());
-        if (isPackageInstalled(context, LauncherTab.SEARCH_PACKAGE)) {
+        if (!LauncherAppState.getInstanceNoCreate().isSearchAppAvailable()) {
             return false;
         }
         return prefs.getBoolean(Homescreen.KEY_SHOW_SEARCHBAR, true);

@@ -55,6 +55,7 @@ public class LauncherAppState {
 
     private HomeKeyWatcher mHomeKeyListener = null;
     private boolean mNeedsRestart;
+    private boolean mIsSearchAppAvailable;
 
     public static LauncherAppState getInstance(final Context context) {
         if (INSTANCE == null) {
@@ -84,6 +85,24 @@ public class LauncherAppState {
         return mContext;
     }
 
+    public static boolean isPackageInstalled(Context context, String pkg, boolean ignoreState) {
+        if (pkg != null) {
+            try {
+                PackageInfo pi = context.getPackageManager().getPackageInfo(pkg, 0);
+                if (!pi.applicationInfo.enabled && !ignoreState) {
+                    return false;
+                }
+            } catch (NameNotFoundException e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isPackageInstalled(Context context, String pkg) {
+        return isPackageInstalled(context, pkg, true);
+    }
+
     private LauncherAppState(Context context) {
         if (getLocalProvider(context) == null) {
             throw new RuntimeException(
@@ -92,6 +111,8 @@ public class LauncherAppState {
         Log.v(Launcher.TAG, "LauncherAppState initiated");
         Preconditions.assertUIThread();
         mContext = context;
+
+        setSearchAppAvailable(isPackageInstalled(context, LauncherTab.SEARCH_PACKAGE));
 
         mInvariantDeviceProfile = new InvariantDeviceProfile(mContext);
         mIconCache = new IconCache(mContext, mInvariantDeviceProfile);
@@ -138,6 +159,7 @@ public class LauncherAppState {
 
         mHomeKeyListener = new HomeKeyWatcher(mContext);
     }
+
 
     public void setNeedsRestart() {
         if (mNeedsRestart) {
@@ -210,4 +232,12 @@ public class LauncherAppState {
             return (LauncherProvider) cl.getLocalContentProvider();
         }
     }
+
+    public void setSearchAppAvailable(boolean available) {
+        mIsSearchAppAvailable = available;
+    }
+    public boolean isSearchAppAvailable() {
+        return mIsSearchAppAvailable;
+    }
+    
 }
