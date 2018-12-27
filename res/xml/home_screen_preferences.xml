@@ -12,7 +12,7 @@
         android:key="pref_show_searchbar"
         android:title="@string/show_searchbar_title"
         android:summary="@string/show_searchbar_summary"
-        android:defaultValue="true"
+        android:defaultValue="false"
         android:persistent="true"/>
 
     <ListPreference
