@@ -57,6 +57,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Toast;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 
 import com.android.launcher3.Launcher.LauncherOverlay;
 import com.android.launcher3.LauncherAppWidgetHost.ProviderChangedListener;
@@ -3583,7 +3586,7 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
         launchIntent.setClassName("com.google.android.googlequicksearchbox",
                 "com.google.android.googlequicksearchbox.SearchActivity");
         if (isPackageInstalled(context,
-                "com.google.android.googlequicksearchbox")) {
+                "com.google.android.googlequicksearchbox",true)) {
             context.startActivity(launchIntent);
         } else {
             Toast.makeText(context, R.string.pref_homescreen_dt_gestures_google_toast,
