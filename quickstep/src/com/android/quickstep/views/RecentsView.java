@@ -1370,6 +1370,7 @@ public abstract class RecentsView<T extends BaseActivity> extends PagedView impl
     protected boolean isPageOrderFlipped() {
         return true;
     }
+
     public boolean getSwipeForClearAllState() {
         return Utilities.getPrefs(mActivity).getBoolean("pref_allowSwipeDownClearAll", false);
     }

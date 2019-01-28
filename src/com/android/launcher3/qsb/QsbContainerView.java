@@ -238,7 +238,6 @@ public class QsbContainerView extends FrameLayout {
             opts.putInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT, size.bottom);
             opts.putString("attached-launcher-identifier", getActivity().getPackageName());
             opts.putString("requested-widget-style", "cqsb");
-
             return opts;
         }
 
