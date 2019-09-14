@@ -75,7 +75,7 @@ public class Gestures extends SettingsActivity implements PreferenceFragment.OnP
             actionBar.setDisplayHomeAsUpEnabled(true);
 
             mHomescreenGestures = (ListPreference) findPreference(KEY_HOMESCREEN_DT_GESTURES);
-            mHomescreenGestures.setValue(getDevicePrefs(mContext).getString(KEY_HOMESCREEN_DT_GESTURES, "0"));
+            mHomescreenGestures.setValue(getDevicePrefs(mContext).getString(KEY_HOMESCREEN_DT_GESTURES, "1"));
             mHomescreenGestures.setOnPreferenceChangeListener(this);
 
             SwitchPreference notificationsGesture = (SwitchPreference) findPreference(Utilities.PREF_NOTIFICATIONS_GESTURE);

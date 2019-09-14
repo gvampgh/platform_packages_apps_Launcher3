@@ -298,7 +298,7 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
         context.enforceCallingOrSelfPermission(
                     android.Manifest.permission.DEVICE_POWER, null);
         mGestureMode = Integer.valueOf(
-                getDevicePrefs(getContext()).getString("pref_homescreen_dt_gestures", "0"));
+                getDevicePrefs(getContext()).getString("pref_homescreen_dt_gestures", "1"));
         mGestureListener =
                 new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
