@@ -49,7 +49,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <string name="icon_size_extra_large">Extra groß</string>
     <!-- Gestures -->
     <string name="allow_swipe_down_clearall_title">Beende all Apps aus dem Anwendungsverlauf</string>
-    <string name="allow_swipe_down_clearall_desc">Wische im Anwenudngsverlauf herunter, um alle Apps zu beenden</string>
+    <string name="allow_swipe_down_clearall_desc">Wische im Anwendungsverlauf herunter, um alle Apps zu beenden</string>
     <string name="pref_homescreen_dt_gestures_title">Doppeltipp-Geste</string>
     <string name="pref_homescreen_dt_gestures_summary">Wählen Sie die Aktion der Doppeltipp-Geste auf dem Homescreen</string>
     <string name="pref_homescreen_dt_gestures_none">Keine</string>
