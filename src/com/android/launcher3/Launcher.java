@@ -2493,7 +2493,7 @@ public class Launcher extends BaseDraggingActivity implements LauncherExterns,
             mModel.forceReload();
         }
         if (KEY_HOMESCREEN_DT_GESTURES.equals(key)) {
-            mWorkspace.setGestures(Integer.valueOf(sharedPreferences.getString("KEY_HOMESCREEN_DT_GESTURES", "0")));
+            mWorkspace.setGestures(Integer.valueOf(sharedPreferences.getString("KEY_HOMESCREEN_DT_GESTURES", "1")));
         }
     }
 }
